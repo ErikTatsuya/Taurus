@@ -13,5 +13,8 @@ POST {{taurus_HostAddress}}/tasks
 Content-Type: application/json
 
 {
-  "title": "ir para casa"
+  "title": "pegar elden ring no hydra launcher"
 }
+
+###
+PATCH  {{taurus_HostAddress}}/tasks/1/complete

@@ -18,8 +18,6 @@ public class Service
         };
 
         List<Tarefa> json = JsonSerializer.Deserialize<List<Tarefa>>(jsonText, options) ?? new List<Tarefa>();
-        Console.WriteLine(jsonText);
-
         return json;
     }
     public static async Task WriteTarefasAsync(IReadOnlyList<Tarefa> tarefas)
@@ -58,5 +56,15 @@ public class Service
         updatedTarefas.Add(newTarefa);
         await WriteTarefasAsync(updatedTarefas);
         return newTarefa;
+    }
+    public static async Task<Tarefa?> CompleteTarefaAsync(int id)
+    {
+        var tarefas = await ReadTarefasAsync();
+        var tarefa = tarefas.FirstOrDefault(t => t.Id == id);
+        if (tarefa == null)
+            return null;
+        tarefa.Completed = true;
+        await WriteTarefasAsync(tarefas);
+        return tarefa;
     }
 }

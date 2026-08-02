@@ -31,6 +31,8 @@ public class Program
         app.MapGet("/tasks", Controller.GetTarefasAsync);
         app.MapGet("/tasks/{id}", Controller.GetTarefaByIdAsync);
         app.MapPost("/tasks", Controller.CreateTarefaAsync);
+        app.MapPatch("/tasks/{id}/complete", Controller.CompleteTarefaAsync);
+        app.MapPatch("/task/{id}/complete", Controller.CompleteTarefaAsync);
 
         app.Run();
     }

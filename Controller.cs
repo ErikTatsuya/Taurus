@@ -25,4 +25,15 @@ public class Controller
         var createdTarefa = await Service.CreateTarefaAsync(request);
         return Results.Created($"/tarefas/{createdTarefa.Id}", createdTarefa);
     }
+    public static async Task<IResult> CompleteTarefaAsync(int id)
+    {
+        var tarefa = await Service.CompleteTarefaAsync(id);
+        if (tarefa == null)
+        {
+            Console.WriteLine($"Tarefa com o id {id} não existe.");
+            return Results.NotFound();
+        }
+
+        return Results.Ok(tarefa);
+    }
 }
