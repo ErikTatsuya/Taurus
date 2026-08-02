@@ -11,7 +11,7 @@ public class Controller
 
         return Results.Ok(tarefas);
     }
-    public static async Task<IResult> GetTarefaByIdAsync(int id)
+    public static async Task<IResult> GetTarefaByIdAsync(Guid id)
     {
         var tarefa = await Service.GetTarefaByIdAsync(id);
         if (tarefa == null)
@@ -25,15 +25,19 @@ public class Controller
         var createdTarefa = await Service.CreateTarefaAsync(request);
         return Results.Created($"/tarefas/{createdTarefa.Id}", createdTarefa);
     }
-    public static async Task<IResult> CompleteTarefaAsync(int id)
+    public static async Task<IResult> CompleteTarefaAsync(Guid id)
     {
         var tarefa = await Service.CompleteTarefaAsync(id);
         if (tarefa == null)
-        {
-            Console.WriteLine($"Tarefa com o id {id} não existe.");
             return Results.NotFound();
-        }
 
         return Results.Ok(tarefa);
+    }
+    public static async Task<IResult> DeleteTarefaAsync(Guid id)
+    {
+        var isSucess = await Service.DeleteTarefaAsync(id);
+        if (isSucess)
+            return Results.NoContent();
+        return Results.NotFound();
     }
 }

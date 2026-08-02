@@ -1,5 +1,4 @@
-@taurus_HostAddress = http://localhost:8000
-
+@taurus_HostAddress = http://localhost:8765
 GET {{taurus_HostAddress}}
 ###
 
@@ -13,8 +12,11 @@ POST {{taurus_HostAddress}}/tasks
 Content-Type: application/json
 
 {
-  "title": "pegar elden ring no hydra launcher"
+  "title": "tarefa teste a ser deletada."
 }
 
 ###
-PATCH  {{taurus_HostAddress}}/tasks/1/complete
+PATCH  {{taurus_HostAddress}}/tasks/8/complete
+
+###
+DELETE {{taurus_HostAddress}}/tasks/8

@@ -37,7 +37,7 @@ public class Service
         string jsonText = JsonSerializer.Serialize(tarefas, options);
         await File.WriteAllTextAsync(path, jsonText);
     }
-    public static async Task<Tarefa?> GetTarefaByIdAsync(int id)
+    public static async Task<Tarefa?> GetTarefaByIdAsync(Guid id)
     {
         var tarefas = await ReadTarefasAsync();
         var tarefa = tarefas.FirstOrDefault(t => t.Id == id);
@@ -48,7 +48,7 @@ public class Service
         var tarefas = await ReadTarefasAsync();
         var newTarefa = new Tarefa
         {
-            Id = tarefas.Count + 1,
+            Id = Guid.NewGuid(),
             Title = request.Title,
             Completed = false
         };
@@ -57,7 +57,7 @@ public class Service
         await WriteTarefasAsync(updatedTarefas);
         return newTarefa;
     }
-    public static async Task<Tarefa?> CompleteTarefaAsync(int id)
+    public static async Task<Tarefa?> CompleteTarefaAsync(Guid id)
     {
         var tarefas = await ReadTarefasAsync();
         var tarefa = tarefas.FirstOrDefault(t => t.Id == id);
@@ -66,5 +66,20 @@ public class Service
         tarefa.Completed = true;
         await WriteTarefasAsync(tarefas);
         return tarefa;
+    }
+    public static async Task<bool> DeleteTarefaAsync(Guid id)
+    {
+        var tarefas = await ReadTarefasAsync();
+        var updatedTarefas = tarefas.ToList();
+        var index = updatedTarefas.FindIndex(t => t.Id == id);
+
+        // Caso index não seja encontrado, -1 será retornado.
+        if (index == -1)
+            return false;
+
+        updatedTarefas.RemoveAt(index);
+        await WriteTarefasAsync(updatedTarefas);
+
+        return true;
     }
 }

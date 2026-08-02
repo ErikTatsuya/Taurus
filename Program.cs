@@ -7,6 +7,8 @@ public class Program
     public static void Main()
     {
         var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseUrls("http://localhost:8765");
+
         // Cors -_- | desenvolvimento
         builder.Services.AddCors(options =>
         {
@@ -32,7 +34,8 @@ public class Program
         app.MapGet("/tasks/{id}", Controller.GetTarefaByIdAsync);
         app.MapPost("/tasks", Controller.CreateTarefaAsync);
         app.MapPatch("/tasks/{id}/complete", Controller.CompleteTarefaAsync);
-        app.MapPatch("/task/{id}/complete", Controller.CompleteTarefaAsync);
+
+        app.MapDelete("tasks/{id}", Controller.DeleteTarefaAsync);
 
         app.Run();
     }

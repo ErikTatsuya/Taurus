@@ -23,5 +23,15 @@
     "id": 5,
     "title": "pegar elden ring no hydra launcher",
     "completed": false
+  },
+  {
+    "id": 6,
+    "title": "tarefa teste a ser deletada.",
+    "completed": false
+  },
+  {
+    "id": 7,
+    "title": "tarefa teste a ser deletada.",
+    "completed": false
   }
 ]
