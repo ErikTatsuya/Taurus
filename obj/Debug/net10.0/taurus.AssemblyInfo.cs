@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("taurus")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d479c9af4433cbd10d35308b64c7afa9d473b199")]
 [assembly: System.Reflection.AssemblyProductAttribute("taurus")]
 [assembly: System.Reflection.AssemblyTitleAttribute("taurus")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
