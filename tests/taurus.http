@@ -1,0 +1,7 @@
+@taurus_HostAddress = http://localhost:8000
+
+GET {{taurus_HostAddress}}
+###
+
+GET {{taurus_HostAddress}}/tasks
+###
