@@ -5,3 +5,10 @@ GET {{taurus_HostAddress}}
 
 GET {{taurus_HostAddress}}/tasks
 ###
+
+POST {{taurus_HostAddress}}/tasks
+Content-Type: application/json
+
+{
+  "title": "ir para casa"
+}

@@ -27,3 +27,4 @@ C:\Users\Daise\Desktop\Nova pasta\taurus\obj\Debug\net10.0\refint\taurus.dll
 C:\Users\Daise\Desktop\Nova pasta\taurus\obj\Debug\net10.0\taurus.pdb
 C:\Users\Daise\Desktop\Nova pasta\taurus\obj\Debug\net10.0\taurus.genruntimeconfig.cache
 C:\Users\Daise\Desktop\Nova pasta\taurus\obj\Debug\net10.0\ref\taurus.dll
+C:\Users\Daise\Desktop\Nova pasta\taurus\obj\Debug\net10.0\taurus.sourcelink.json

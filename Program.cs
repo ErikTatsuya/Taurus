@@ -1,5 +1,7 @@
 namespace Taurus;
 
+using Taurus.controllers;
+
 public class Program
 {
     public static void Main()
@@ -27,6 +29,7 @@ public class Program
         });
 
         app.MapGet("/tasks", Controller.GetTarefasAsync);
+        app.MapPost("/tasks", Controller.CreateTarefaAsync);
 
         app.Run();
     }
