@@ -6,6 +6,9 @@ GET {{taurus_HostAddress}}
 GET {{taurus_HostAddress}}/tasks
 ###
 
+GET {{taurus_HostAddress}}/tasks/1
+
+###
 POST {{taurus_HostAddress}}/tasks
 Content-Type: application/json
 

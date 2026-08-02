@@ -5,11 +5,20 @@ using Taurus.requests;
 
 public class Controller
 {
-    public async static Task<IResult> GetTarefasAsync()
+    public static async Task<IResult> GetTarefasAsync()
     {
         var tarefas = await Service.ReadTarefasAsync();
 
         return Results.Ok(tarefas);
+    }
+    public static async Task<IResult> GetTarefaByIdAsync(int id)
+    {
+        var tarefa = await Service.GetTarefaByIdAsync(id);
+        if (tarefa == null)
+        {
+            return Results.NotFound();
+        }
+        return Results.Ok(tarefa);
     }
     public static async Task<IResult> CreateTarefaAsync(CreateTarefaRequest request)
     {

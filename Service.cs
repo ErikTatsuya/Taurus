@@ -39,6 +39,12 @@ public class Service
         string jsonText = JsonSerializer.Serialize(tarefas, options);
         await File.WriteAllTextAsync(path, jsonText);
     }
+    public static async Task<Tarefa?> GetTarefaByIdAsync(int id)
+    {
+        var tarefas = await ReadTarefasAsync();
+        var tarefa = tarefas.FirstOrDefault(t => t.Id == id);
+        return tarefa;
+    }
     public static async Task<Tarefa> CreateTarefaAsync(CreateTarefaRequest request)
     {
         var tarefas = await ReadTarefasAsync();
