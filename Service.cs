@@ -67,6 +67,18 @@ public class Service
         await WriteTarefasAsync(tarefas);
         return tarefa;
     }
+    public static async Task<Tarefa?> ChangeTarefaTitleAsync(Guid id, string title)
+    {
+        var tarefas = await ReadTarefasAsync();
+        var tarefa = tarefas.FirstOrDefault(t => t.Id == id);
+
+        if (tarefa == null)
+            return null;
+
+        tarefa.Title = title;
+        await WriteTarefasAsync(tarefas);
+        return tarefa;
+    }
     public static async Task<bool> DeleteTarefaAsync(Guid id)
     {
         var tarefas = await ReadTarefasAsync();

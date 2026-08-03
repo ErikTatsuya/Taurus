@@ -34,8 +34,8 @@ public class Program
         app.MapGet("/tasks/{id}", Controller.GetTarefaByIdAsync);
         app.MapPost("/tasks", Controller.CreateTarefaAsync);
         app.MapPatch("/tasks/{id}/complete", Controller.CompleteTarefaAsync);
-
-        app.MapDelete("tasks/{id}", Controller.DeleteTarefaAsync);
+        app.MapPatch("/tasks/{id}/change-title", Controller.ChangeTarefaTitleAsync);
+        app.MapDelete("/tasks/{id}", Controller.DeleteTarefaAsync);
 
         app.Run();
     }

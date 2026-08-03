@@ -1,37 +1,14 @@
 [
   {
-    "id": 1,
-    "title": "fazer um app todo",
-    "completed": true
+    "id": "a371403a-d328-41d8-9f80-2a0e8d7ae077",
+    "title": "tarefa teste",
+    "completed": false,
+    "createdAt": "2026-08-03T00:52:30.3790499-03:00"
   },
   {
-    "id": 2,
-    "title": "New Task",
-    "completed": false
-  },
-  {
-    "id": 3,
-    "title": "Test Task",
-    "completed": false
-  },
-  {
-    "id": 4,
-    "title": "ir para casa",
-    "completed": false
-  },
-  {
-    "id": 5,
-    "title": "pegar elden ring no hydra launcher",
-    "completed": false
-  },
-  {
-    "id": 6,
-    "title": "tarefa teste a ser deletada.",
-    "completed": false
-  },
-  {
-    "id": 7,
-    "title": "tarefa teste a ser deletada.",
-    "completed": false
+    "id": "274d4037-d951-482f-91bf-cfee94bf9d81",
+    "title": "tarefa teste",
+    "completed": false,
+    "createdAt": "2026-08-03T00:52:43.569537-03:00"
   }
 ]

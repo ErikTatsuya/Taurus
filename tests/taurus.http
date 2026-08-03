@@ -1,22 +1,29 @@
 @taurus_HostAddress = http://localhost:8765
+
+### health check
 GET {{taurus_HostAddress}}
-###
 
+### listar tarefas
 GET {{taurus_HostAddress}}/tasks
-###
 
-GET {{taurus_HostAddress}}/tasks/1
-
-###
+### criar tarefa
 POST {{taurus_HostAddress}}/tasks
 Content-Type: application/json
 
 {
-  "title": "tarefa teste a ser deletada."
+  "title": "tarefa teste tung tung tung sahur"
+}
+
+### trocar título da tarefa
+PATCH {{taurus_HostAddress}}/tasks/4b1bb9dc-fa55-4ebd-8507-4fe462f71f52/change-title
+Content-Type: application/json
+
+{
+  "title": "tarefa atualizada"
 }
 
 ###
-PATCH  {{taurus_HostAddress}}/tasks/8/complete
+PATCH {{taurus_HostAddress}}/tasks/4b1bb9dc-fa55-4ebd-8507-4fe462f71f52/complete
 
 ###
-DELETE {{taurus_HostAddress}}/tasks/8
+DELETE {{taurus_HostAddress}}/tasks/4b1bb9dc-fa55-4ebd-8507-4fe462f71f52

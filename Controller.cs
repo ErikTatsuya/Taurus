@@ -30,6 +30,20 @@ public class Controller
         var tarefa = await Service.CompleteTarefaAsync(id);
         if (tarefa == null)
             return Results.NotFound();
+        return Results.Ok(tarefa);
+    }
+    public static async Task<IResult> ChangeTarefaTitleAsync(Guid id, ChangeTarefaTitleRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(request.Title))
+            return Results.BadRequest("O título é obrigatório.");
+
+        if (request.Title.Length > 32)
+            return Results.BadRequest("O título deve ter no máximo 32 caracteres.");
+
+        var tarefa = await Service.ChangeTarefaTitleAsync(id, request.Title);
+
+        if (tarefa == null)
+            return Results.NotFound();
 
         return Results.Ok(tarefa);
     }
