@@ -1,46 +1,33 @@
-namespace Taurus;
+using Taurus.Extensions;
 
-using Taurus.controllers;
+var builder = WebApplication.CreateBuilder();
+builder.WebHost.UseUrls("http://localhost:8765");
 
-public class Program
+// Registrar serviços da aplicação
+builder.Services.AddControllers();
+builder.Services.AddTarefaServices(builder.Configuration);
+
+// Cors -_- | desenvolvimento
+builder.Services.AddCors(options =>
 {
-    public static void Main()
+    options.AddDefaultPolicy(policy =>
     {
-        FileInfo TarefasJson = new FileInfo("data/tasks.json");
-        if (!TarefasJson.Exists)
-            TarefasJson.Create();
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
-        var builder = WebApplication.CreateBuilder();
-        builder.WebHost.UseUrls("http://localhost:8765");
+var app = builder.Build();
+app.UseCors();
 
-        // Cors -_- | desenvolvimento
-        builder.Services.AddCors(options =>
-        {
-            options.AddDefaultPolicy(policy =>
-            {
-                policy.AllowAnyOrigin()
-                      .AllowAnyHeader()
-                      .AllowAnyMethod();
-            });
-        });
+app.MapGet("/", () =>
+{
+    var date = DateTime.Now.Date;
+    var hour = DateTime.Now.Hour;
+    return Results.Ok($"Olá, agora são {hour} do dia {date:dd/MM/yyyy}");
+});
 
-        var app = builder.Build();
-        app.UseCors();
+app.MapControllers();
 
-        app.MapGet("/", () =>
-        {
-            var date = DateTime.Now.Date;
-            var hour = DateTime.Now.Hour;
-            return Results.Ok($"Olá, agora são {hour} do dia {date:dd/MM/yyyy}");
-        });
-
-        app.MapGet("/tasks", Controller.GetTarefasAsync);
-        app.MapGet("/tasks/{id}", Controller.GetTarefaByIdAsync);
-        app.MapPost("/tasks", Controller.CreateTarefaAsync);
-        app.MapPatch("/tasks/{id}/complete", Controller.CompleteTarefaAsync);
-        app.MapPatch("/tasks/{id}/title", Controller.ChangeTarefaTitleAsync);
-        app.MapDelete("/tasks/{id}", Controller.DeleteTarefaAsync);
-
-        app.Run();
-    }
-}
+app.Run();

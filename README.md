@@ -4,7 +4,7 @@ Uma Web API de gerenciamento de tarefas desenvolvida com **ASP.NET Core**.
 
 O projeto foi criado como estudo dos fundamentos de desenvolvimento backend, explorando criação de endpoints REST, manipulação de requisições HTTP, persistência de dados e organização básica de uma aplicação web.
 
-Atualmente, os dados são armazenados em um arquivo JSON, simulando uma camada simples de persistência.
+Atualmente, os dados são armazenados em um arquivo JSON, simulando uma camada simples de persistência. A arquitetura foi preparada para futura migração para PostgreSQL.
 
 ---
 
@@ -13,6 +13,7 @@ Atualmente, os dados são armazenados em um arquivo JSON, simulando uma camada s
 - C#
 - ASP.NET Core
 - JSON
+- Entity Framework Core (preparado para PostgreSQL)
 
 ---
 
@@ -90,7 +91,7 @@ Marca uma tarefa como concluída.
 
 ## Alterar título
 
-### PATCH `/tasks/{id}/change-title`
+### PATCH `/tasks/{id}/title`
 
 Altera o título de uma tarefa existente.
 
@@ -116,30 +117,60 @@ Remove uma tarefa pelo identificador.
 
 ```
 Taurus/
-│
-├── Controller.cs
-├── Service.cs
-├── Tarefa.cs
-├── Requests.cs
 ├── Program.cs
-│
-├── data/
-│   └── tasks.json
-│
-├── tests/
-│
+├── taurus.csproj
 ├── appsettings.json
 ├── appsettings.Development.json
-└── taurus.csproj
+├── README.md
+├── .gitignore
+├── Properties/
+│   └── launchSettings.json
+├── src/
+│   ├── Models/
+│   │   └── Tarefa.cs
+│   ├── DTOs/
+│   │   ├── CreateTarefaRequest.cs
+│   │   └── ChangeTarefaTitleRequest.cs
+│   ├── Controllers/
+│   │   └── TarefaController.cs
+│   ├── Services/
+│   │   ├── ITarefaService.cs
+│   │   └── TarefaService.cs
+│   ├── Data/
+│   │   ├── AppDbContext.cs
+│   │   └── Repositories/
+│   │       ├── ITarefaRepository.cs
+│   │       ├── JsonTarefaRepository.cs
+│   │       └── PgTarefaRepository.cs
+│   └── Extensions/
+│       └── ServiceCollectionExtensions.cs
+├── Migrations/
+│   ├── AppDbContextModelSnapshot.cs
+│   └── 20260805034533_InitialCreate.cs
+│   └── 20260805034533_InitialCreate.Designer.cs
+└── tests/
+    ├── taurus.http
+    └── script_py/
 ```
 
 ---
 
 # Organização
 
-O projeto utiliza uma separação simples de responsabilidades.
+O projeto utiliza uma separação clara de responsabilidades baseada em camadas.
 
-## Controller.cs
+## src/Models/Tarefa.cs
+
+Representa a entidade principal da aplicação.
+
+## src/DTOs/
+
+Contém os modelos utilizados para receber dados das requisições.
+
+- `CreateTarefaRequest.cs` - Modelo para criação de tarefas
+- `ChangeTarefaTitleRequest.cs` - Modelo para alteração de título
+
+## src/Controllers/TarefaController.cs
 
 Responsável pelos endpoints HTTP.
 
@@ -149,35 +180,34 @@ Funções:
 - Validar dados recebidos.
 - Retornar respostas HTTP.
 
----
-
-## Service.cs
+## src/Services/
 
 Responsável pela lógica da aplicação.
 
-Funções:
+- `ITarefaService.cs` - Interface do serviço
+- `TarefaService.cs` - Implementação com regras de negócio
 
-- Ler tarefas do arquivo JSON.
-- Escrever alterações no arquivo.
-- Criar, atualizar e remover tarefas.
+## src/Data/Repositories/
 
----
+Implementa o padrão Repository para abstrair a persistência de dados.
 
-## Tarefa.cs
+- `ITarefaRepository.cs` - Interface do repositório
+- `JsonTarefaRepository.cs` - Implementação atual usando arquivo JSON
+- `PgTarefaRepository.cs` - Implementação futura usando PostgreSQL via EF Core
 
-Representa a entidade principal da aplicação.
+## src/Extensions/ServiceCollectionExtensions.cs
 
----
+Configuração centralizada de injeção de dependência.
 
-## Requests.cs
+## src/Data/AppDbContext.cs
 
-Contém os modelos utilizados para receber dados das requisições.
+Contexto do Entity Framework Core para uso futuro com PostgreSQL.
 
 ---
 
 # Persistência de dados
 
-A aplicação utiliza um arquivo JSON como armazenamento:
+A aplicação atualmente utiliza um arquivo JSON como armazenamento:
 
 ```
 data/tasks.json
@@ -199,6 +229,26 @@ Em aplicações maiores, esse tipo de armazenamento seria substituído por um ba
 
 ---
 
+# Migração para PostgreSQL
+
+A arquitetura foi preparada para facilitar a migração de JSON para PostgreSQL:
+
+1. O `ITarefaRepository` define o contrato para operações de dados
+2. `JsonTarefaRepository` implementa a persistência atual em JSON
+3. `PgTarefaRepository` está pronto para uso com PostgreSQL via Entity Framework Core
+4. A troca entre implementações é feita apenas na configuração de DI em `ServiceCollectionExtensions.cs`
+
+Para migrar:
+
+1. Configure a string de conexão no `appsettings.json`
+2. Altere a implementação registrada em `ServiceCollectionExtensions.cs`:
+   ```csharp
+   services.AddScoped<ITarefaRepository, PgTarefaRepository>();
+   ```
+3. Execute as migrations: `dotnet ef database update`
+
+---
+
 # Recursos implementados
 
 - API REST
@@ -209,7 +259,10 @@ Em aplicações maiores, esse tipo de armazenamento seria substituído por um ba
 - Identificadores utilizando Guid
 - DTOs para requisições
 - Validação de dados
-- Separação entre Controller e Service
+- Injeção de dependência
+- Padrão Repository
+- Separação entre Controller, Service e Repository
+- Preparado para migração para PostgreSQL
 
 ---
 
