@@ -6,3 +6,5 @@ bin/
 __pycache__/
 data/tasks.json
 tests/script_py/output/
+appsettings.json
+appsettings.Development.json
